@@ -1,0 +1,27 @@
+# Simple proxy using a cache.
+[resolvers.114-dns]
+address = "114.114.114.114:53"
+protocol = "udp"
+
+[resolvers.google-dns]
+address = "8.8.8.8:53"
+protocol = "udp"
+
+[resolvers.dnsgud-dns]
+address = "127.0.0.1:1153"
+protocol = "udp"
+
+[groups.google-dns-cached]
+type = "cache"
+resolver-type = "random"
+#resolvers = ["114-dns", "google-dns"]
+resolvers = ["dnsgud-dns"]
+cache-size = 1000               # Optional, max number of responses to cache. Default unlimited
+cache-negative-ttl = 10         # Optional, TTL to apply to responses without a SOA
+cache-answer-shuffle = "round-robin" # Optional, rotate the order of cached responses
+
+[listeners.local-udp]
+address = "0.0.0.0:9953"
+protocol = "udp"
+resolver = "google-dns-cached"
+

@@ -56,19 +56,20 @@ type doh struct {
 }
 
 type group struct {
-	Resolvers  []string
-	Type       string
-	Replace    []rdns.ReplaceOperation // only used by "replace" type
-	GCPeriod   int                     `toml:"gc-period"`   // Time-period (seconds) used to expire cached items in the "cache" type
-	ECSOp      string                  `toml:"ecs-op"`      // ECS modifier operation, "add", "delete", "privacy"
-	ECSAddress net.IP                  `toml:"ecs-address"` // ECS address. If empty for "add", uses the client IP. Ignored for "privacy" and "delete"
-	ECSPrefix4 uint8                   `toml:"ecs-prefix4"` // ECS IPv4 address prefix, 0-32. Used for "add" and "privacy"
-	ECSPrefix6 uint8                   `toml:"ecs-prefix6"` // ECS IPv6 address prefix, 0-128. Used for "add" and "privacy"
-	TTLMin     uint32                  `toml:"ttl-min"`     // TTL minimum to apply to responses in the TTL-modifier
-	TTLMax     uint32                  `toml:"ttl-max"`     // TTL maximum to apply to responses in the TTL-modifier
-	EDNS0Op    string                  `toml:"edns0-op"`    // EDNS0 modifier operation, "add" or "delete"
-	EDNS0Code  uint16                  `toml:"edns0-code"`  // EDNS0 modifier option code
-	EDNS0Data  []byte                  `toml:"edns0-data"`  // EDNS0 modifier option data
+	Resolvers    []string
+	ResolverType string `toml:"resolver-type"` // for "cache" type mulit resolver
+	Type         string
+	Replace      []rdns.ReplaceOperation // only used by "replace" type
+	GCPeriod     int                     `toml:"gc-period"`   // Time-period (seconds) used to expire cached items in the "cache" type
+	ECSOp        string                  `toml:"ecs-op"`      // ECS modifier operation, "add", "delete", "privacy"
+	ECSAddress   net.IP                  `toml:"ecs-address"` // ECS address. If empty for "add", uses the client IP. Ignored for "privacy" and "delete"
+	ECSPrefix4   uint8                   `toml:"ecs-prefix4"` // ECS IPv4 address prefix, 0-32. Used for "add" and "privacy"
+	ECSPrefix6   uint8                   `toml:"ecs-prefix6"` // ECS IPv6 address prefix, 0-128. Used for "add" and "privacy"
+	TTLMin       uint32                  `toml:"ttl-min"`     // TTL minimum to apply to responses in the TTL-modifier
+	TTLMax       uint32                  `toml:"ttl-max"`     // TTL maximum to apply to responses in the TTL-modifier
+	EDNS0Op      string                  `toml:"edns0-op"`    // EDNS0 modifier operation, "add" or "delete"
+	EDNS0Code    uint16                  `toml:"edns0-code"`  // EDNS0 modifier option code
+	EDNS0Data    []byte                  `toml:"edns0-data"`  // EDNS0 modifier option data
 
 	// Failover/Failback options
 	ResetAfter    int  `toml:"reset-after"`    // Time in seconds after which to reset resolvers in fail-back and random groups, default 60.
